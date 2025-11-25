@@ -1,0 +1,60 @@
+{
+    "name": "Add your package name here",
+    "version": "Add your package version here",
+    "description": "Add your package description here",
+    "main": "out/init.lua",
+    "packageManager": "bun@1.3.1",
+    "scripts": {
+        "build": "rbxtsc",
+        "dev": "rbxtsc -w --type game --rojo test.project.json"
+    },
+    "keywords": [
+        "roact",
+        "react",
+        "roblox-ts"
+    ],
+    "author": "Add your name here",
+    "license": "Add your license here etc. MIT",
+    "repository": {
+        "type": "git",
+        "url": "Add your repository url here"
+    },
+    "bugs": {
+        "url": "add your issues url here"
+    },
+    "types": "out/index.d.ts",
+    "files": [
+        "out",
+        "!**/*.tsbuildinfo",
+        "!**/*.spec.lua",
+        "!**/*.spec.d.ts"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@rbxts/compiler-types": "3.0.0-types.0",
+        "@rbxts/react": "17.3.0-alpha.1",
+        "@rbxts/react-roblox": "17.3.0-alpha.1",
+        "@rbxts/types": "^1.0.891",
+        "@typescript-eslint/eslint-plugin": "^8.46.4",
+        "@typescript-eslint/parser": "^8.46.4",
+        "roblox-ts": "3.0.0",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@rbxts/charm": "^0.10.0",
+        "@rbxts/loners-pretty-react-hooks": "^0.0.3",
+        "@rbxts/react-charm": "^0.3.0",
+        "@rbxts/ripple": "^0.9.3",
+        "@rbxts/services": "^1.6.0",
+        "@rbxts/set-timeout": "^1.1.2"
+    },
+    "peerDependencies": {
+        "@rbxts/react-roblox": "*",
+        "@rbxts/react-charm": "*",
+        "@rbxts/react-charm": "*",
+        "@rbxts/charm": "*",
+        "@rbxts/react": "*"
+    }
+}
