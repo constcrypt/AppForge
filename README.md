@@ -96,7 +96,7 @@ export default class SideButtons extends Args {
 Inside a decorated App:
 
 ```ts
-this.Forge   // AppForge instance
+this.forge   // AppForge instance
 this.name    // App Name
 this.props   // AppProps
 this.bind    // visible state bind
