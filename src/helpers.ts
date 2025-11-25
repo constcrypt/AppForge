@@ -1,21 +1,16 @@
 // Types
-import type AppForge from ".";
+import Types from "./types";
 
-export function Render({
-	props,
-	manager,
-	names,
-}: {
-	props: AppProps;
-	manager: AppForge;
-	names?: AppNames[number] | AppNames[number][];
-}) {
-	if (names) {
-		if (typeIs(names, "table")) {
-			return manager.renderApps(props, names);
-		} else {
-			return manager.renderApp(props, names);
-		}
+export function Render(props: Types.MainProps) {
+	const names = props.names;
+	const name = props.name;
+
+	const forge = props.forge;
+
+	if (name) {
+		return forge.renderApp(props);
+	} else if (names) {
+		return forge.renderApps(props);
 	}
-	return manager.renderAll(props);
+	return forge.renderAll(props);
 }

@@ -5,7 +5,7 @@
       "name": "@rbxts/pretty-react-hooks",
       "dependencies": {
         "@rbxts/charm": "^0.10.0",
-        "@rbxts/loners-pretty-react-hooks": "^0.0.3",
+        "@rbxts/loners-pretty-react-hooks": "^0.2.9",
         "@rbxts/react-charm": "^0.3.0",
         "@rbxts/ripple": "^0.9.3",
         "@rbxts/services": "^1.6.0",
@@ -23,7 +23,6 @@
         "typescript": "^5.9.3",
       },
       "peerDependencies": {
-        "@rbxts/object-utils": "*",
         "@rbxts/react": "*",
         "@rbxts/react-roblox": "*",
       },
@@ -108,9 +107,7 @@
 
     "@rbxts/compiler-types": ["@rbxts/compiler-types@3.0.0-types.0", "", {}, "sha512-VGOHJPoL7+56NTatMGqQj3K7xWuzEV+aP4QD5vZiHu+bcff3kiTmtoadaF6NkJrmwfFAvbsd4Dg764ZjWNceag=="],
 
-    "@rbxts/loners-pretty-react-hooks": ["@rbxts/loners-pretty-react-hooks@0.0.3", "", { "dependencies": { "@rbxts/charm": "^0.10.0", "@rbxts/react-charm": "^0.3.0", "@rbxts/ripple": "^0.9.3", "@rbxts/services": "^1.6.0", "@rbxts/set-timeout": "^1.1.2" }, "peerDependencies": { "@rbxts/react": "*", "@rbxts/react-roblox": "*" } }, "sha512-jIzAZTQeOofDdts9FyMuNHTGe4kQ2mZOjlriPcLIM85uxigXOwAel7Z1cJqKRGcV8y0Lzgah/TaUP29fzkxOzg=="],
-
-    "@rbxts/object-utils": ["@rbxts/object-utils@1.0.4", "", {}, "sha512-dLLhf022ipV+9i910sOE7kl9losKHoon0WgeerHqVMQA5EYsLUsVT2AxhJuhk8MiDn5oJ2GiFofE/LadY9TpJQ=="],
+    "@rbxts/loners-pretty-react-hooks": ["@rbxts/loners-pretty-react-hooks@0.2.9", "", { "dependencies": { "@rbxts/charm": "^0.10.0", "@rbxts/loners-pretty-react-hooks": "^0.0.3", "@rbxts/react-charm": "^0.3.0", "@rbxts/ripple": "^0.9.3", "@rbxts/services": "^1.6.0", "@rbxts/set-timeout": "^1.1.2" }, "peerDependencies": { "@rbxts/react": "*", "@rbxts/react-roblox": "*" } }, "sha512-+tdJ64gdHfdSg4ATDctZnDO0ehKEDJFUocw+TYs3OrUSHRrsx5draoGz95GWgLB2jschdvrFQfcXC7jJe3/TTg=="],
 
     "@rbxts/react": ["@rbxts/react@17.3.0-alpha.1", "", { "dependencies": { "@rbxts-js/react": "17.1.20-ts.1" } }, "sha512-l2KYYxSj5pOKA2/QelbQRiqQjbI6SRMv8mrmIjc7xpAzuw728aumJ6V6Ol0lrQO/Qt5LVQ8En2L+6C6Lt4sLqA=="],
 
@@ -419,6 +416,8 @@
     "@eslint-community/eslint-utils/eslint-visitor-keys": ["eslint-visitor-keys@3.4.3", "", {}, "sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag=="],
 
     "@eslint/eslintrc/ignore": ["ignore@5.3.2", "", {}, "sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g=="],
+
+    "@rbxts/loners-pretty-react-hooks/@rbxts/loners-pretty-react-hooks": ["@rbxts/loners-pretty-react-hooks@0.0.3", "", { "dependencies": { "@rbxts/charm": "^0.10.0", "@rbxts/react-charm": "^0.3.0", "@rbxts/ripple": "^0.9.3", "@rbxts/services": "^1.6.0", "@rbxts/set-timeout": "^1.1.2" }, "peerDependencies": { "@rbxts/react": "*", "@rbxts/react-roblox": "*" } }, "sha512-jIzAZTQeOofDdts9FyMuNHTGe4kQ2mZOjlriPcLIM85uxigXOwAel7Z1cJqKRGcV8y0Lzgah/TaUP29fzkxOzg=="],
 
     "@rbxts/set-timeout/@rbxts/services": ["@rbxts/services@1.5.5", "", {}, "sha512-Hu7QH2ecefS60zpakKG3T2vgABydoOJqpSG7nXr59wFAbPk/cA+OcsntYPHUWyHAat0VFGZ5jNZLTLdiqfssvg=="],
 

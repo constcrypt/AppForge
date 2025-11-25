@@ -1,5 +1,6 @@
 // Types
 import type { Args } from "./decorator";
+import type AppForge from ".";
 
 declare namespace Types {
 	type AppRegistryProps = {
@@ -8,8 +9,18 @@ declare namespace Types {
 		rules?: Rules.All;
 	};
 
+	type MainProps = (
+		| { name: AppNames[number]; names?: undefined }
+		| { names: AppNames[number][]; name?: undefined }
+	) & {
+		props: AppProps;
+		forge: AppForge;
+		target?: GuiObject | Camera;
+		root?: ReactRoblox.Root;
+	};
+
 	type AppRegistry = {
-		constructor: new (props: AppProps) => Args;
+		constructor: new (props: MainProps) => Args;
 		visible?: boolean;
 		rules?: Rules.All;
 	};
@@ -31,4 +42,5 @@ declare namespace Types {
 	}
 }
 
+export type MainProps = Types.MainProps;
 export default Types;

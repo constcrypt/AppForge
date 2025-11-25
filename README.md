@@ -104,10 +104,18 @@ export default class SideButtons extends Args {
 
 ### ❗ Note
 
-`Args` automatically injects AppProps into `this`, such as:
+`Args` automatically injects AppProps and more into `this`, such as:
 
 ```ts
-this.props
+this.Forge // This is the AppForge Manager Created
+this.name // The Name given on Element Creation
+this.props // Props passed through Render
+this.bind // This is the visible Bind
+
+// Also I added px into the this.props table for you just requires my other lib so you can do this
+const { px } = this.props
+
+px.map((s) => (1 * s))
 ```
 
 You never manually `new` apps — AppForge constructs them automatically.

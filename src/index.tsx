@@ -1,6 +1,8 @@
 // Packages
-import Object from "@rbxts/object-utils";
 import React from "@rbxts/react";
+
+// Types
+import type Types from "./types";
 
 // Components
 import { AppRegistry, Args, App } from "./decorator";
@@ -15,10 +17,6 @@ export default class AppForge {
 
 	private rulesManager = new RulesManager(this);
 
-	private getAllNames(): AppNames[number][] {
-		return Object.keys(AppRegistry) as AppNames[number][];
-	}
-
 	public getBind(name: AppNames[number]) {
 		if (!this.binds.has(name)) error(`App "${name}" has no binding`);
 		return this.binds.get(name)![0];
@@ -31,6 +29,9 @@ export default class AppForge {
 	public set(name: AppNames[number], value: boolean) {
 		if (!this.rulesManager.applyRules(name, value)) return;
 		const [_, setBinding] = this.binds.get(name)!;
+
+		if (!setBinding) error(`App "${name}" has no binding setter`);
+
 		setBinding(value);
 	}
 
@@ -46,18 +47,32 @@ export default class AppForge {
 		this.set(name, !this.getState(name));
 	}
 
-	public renderApp(props: AppProps, name: AppNames[number]) {
-		return <AppContainer key={`${name}_Container`} name={name} manager={this} {...props} />;
+	public renderApp(props: Types.MainProps) {
+		return <AppContainer {...props} />;
 	}
 
-	public renderApps(props: AppProps, names: AppNames[number][]) {
-		return names.map((n) => this.renderApp(props, n));
+	public renderApps(props: Types.MainProps) {
+		const { name, names } = props;
+
+		if (name) {
+			return this.renderApp({ props, name, forge: this });
+		} else if (names) {
+			return names.map((n) => this.renderApp({ props, name: n, forge: this }));
+		}
+
+		throw "Invalid props: must provide name or names";
 	}
 
-	public renderAll(props: AppProps) {
-		return this.renderApps(props, this.getAllNames());
+	public renderAll(props: Types.MainProps) {
+		const names = [] as AppNames[number][];
+		AppRegistry.forEach((_, name) => {
+			names.push(name);
+		});
+		return this.renderApps({ props, names, forge: this });
 	}
 }
 
 export { App, Args };
 export { Render } from "./helpers";
+
+export type { MainProps } from "./types";

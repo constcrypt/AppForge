@@ -1,11 +1,11 @@
 // Services
-import { RunService } from "@rbxts/services";
+import { RunService, Workspace } from "@rbxts/services";
 
 // Packages
-import { useBindingListener, useSpring } from "@rbxts/loners-pretty-react-hooks";
-import React, { cloneElement, useBinding, useState } from "@rbxts/react";
+import React, { cloneElement, useBinding } from "@rbxts/react";
 
 // Types
+import type Types from "./types";
 import type AppForge from ".";
 
 // Components
@@ -19,37 +19,32 @@ function createBinding(name: AppNames[number], manager: AppForge) {
 	manager.binds.set(name, binding);
 	return binding;
 }
-function createInstance(props: AppProps, name: AppNames[number], manager: AppForge) {
+function createInstance(props: Types.MainProps) {
+	const { name, forge } = props;
+
+	if (!name) throw "App name is required to create instance";
+
 	const appClass = AppRegistry.get(name);
 	if (!appClass) error(`App "${name}" not registered`);
 
-	if (!manager.loaded.has(name)) {
+	if (!forge.loaded.has(name)) {
 		const instance = new appClass.constructor(props);
 		const element = cloneElement(instance.render(), { key: "Main" });
 
-		manager.loaded.set(name, element);
+		forge.loaded.set(name, element);
 	}
-	return manager.loaded.get(name)!;
+	return forge.loaded.get(name)!;
 }
 
-export function AppContainer(props: AppProps & { name: AppNames[number]; manager: AppForge }) {
-	const { name, manager } = props;
+export function AppContainer(props: Types.MainProps) {
+	const { name, forge } = props;
 
-	const [binding, _] = createBinding(name, manager);
+	if (!name) throw "App name is required in AppContainer";
 
-	const spring = useSpring(
-		binding.map((v) => (v ? 0 : 1)),
-		{ frequency: 0.4, damping: 0.8 },
-	);
+	createBinding(name, forge);
 
-	const [_isVisible, setisVisible] = useState(binding.getValue());
-
-	const element = createInstance(props, name, manager);
+	const element = createInstance(props);
 	if (!element) error(`Failed to create instance for app "${name}"`);
-
-	useBindingListener(spring, (v) => {
-		setisVisible(v === 0);
-	});
 
 	if (RunService.IsRunning()) {
 		return (
