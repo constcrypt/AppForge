@@ -19,8 +19,7 @@ export default class AppForge {
 	private rulesManager = new RulesManager(this);
 
 	public getBind(name: AppNames[number]) {
-		if (!RunService.IsRunning()) return; // THIS IS FOR UILABS for when rendering less then the entire App
-
+		if (!RunService.IsRunning() && !this.binds.has(name)) return; // THIS IS FOR UILABS for when rendering less then the entire App
 		if (!this.binds.has(name)) throw `App "${name}" has no binding`;
 		return this.binds.get(name)![0];
 	}
