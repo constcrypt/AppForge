@@ -1,5 +1,5 @@
 // Packages
-import React from "@rbxts/react";
+import React, { ReactPureComponent } from "@rbxts/react";
 
 // Types
 import type Types from "./types";
@@ -10,6 +10,7 @@ import { AppContainer } from "./container";
 
 // Classes
 import RulesManager from "./rules";
+import { RunService } from "@rbxts/services";
 
 export default class AppForge {
 	public binds = new Map<AppNames[number], [React.Binding<boolean>, (T: boolean) => void]>();
@@ -18,19 +19,21 @@ export default class AppForge {
 	private rulesManager = new RulesManager(this);
 
 	public getBind(name: AppNames[number]) {
-		if (!this.binds.has(name)) error(`App "${name}" has no binding`);
+		if (!RunService.IsRunning()) return; // THIS IS FOR UILABS for when rendering less then the entire App
+
+		if (!this.binds.has(name)) throw `App "${name}" has no binding`;
 		return this.binds.get(name)![0];
 	}
 
 	public getState(name: AppNames[number]) {
-		return this.getBind(name).getValue();
+		return this.getBind(name)?.getValue();
 	}
 
 	public set(name: AppNames[number], value: boolean) {
 		if (!this.rulesManager.applyRules(name, value)) return;
 		const [_, setBinding] = this.binds.get(name)!;
 
-		if (!setBinding) error(`App "${name}" has no binding setter`);
+		if (!setBinding) throw `App "${name}" has no binding setter`;
 
 		setBinding(value);
 	}

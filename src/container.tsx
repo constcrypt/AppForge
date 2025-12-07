@@ -13,7 +13,7 @@ import { AppRegistry } from "./decorator";
 
 function createBinding(name: AppNames[number], manager: AppForge) {
 	const app = AppRegistry.get(name);
-	if (!app) error(`App "${name}" not registered`);
+	if (!app) throw `App "${name}" not registered`;
 
 	const binding = useBinding(app.visible ?? false);
 	manager.binds.set(name, binding);
@@ -25,7 +25,7 @@ function createInstance(props: Types.NameProps & Types.MainProps) {
 	if (!name) throw "App name is required to create instance";
 
 	const appClass = AppRegistry.get(name);
-	if (!appClass) error(`App "${name}" not registered`);
+	if (!appClass) throw `App "${name}" not registered`;
 
 	if (!forge.loaded.has(name)) {
 		const instance = new appClass.constructor(props);

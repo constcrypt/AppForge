@@ -38,6 +38,9 @@ export abstract class Args {
 
 		if (!name) throw "App name is required in Args constructor";
 
+		const bind = forge.getBind(name);
+		if (!bind) throw "FAILED TO GET BIND FOR APP!";
+
 		const px = usePx(target);
 
 		this.forge = forge;
@@ -45,7 +48,7 @@ export abstract class Args {
 		this.props = { ...props.props, px };
 		this.name = name;
 
-		this.bind = forge.getBind(name);
+		this.bind = bind;
 		this.state = this.bind.getValue();
 	}
 
