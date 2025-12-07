@@ -52,7 +52,7 @@ export abstract class Args {
 		this.name = name;
 
 		this.bind = bind!;
-		this.state = this.bind.getValue();
+		this.state = this.bind ? this.bind.getValue() : undefined!;
 	}
 
 	abstract render(): JSX.Element;
