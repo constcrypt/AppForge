@@ -9,6 +9,9 @@ package-lock.json
 yarn.lock
 pnpm-lock.yaml
 
+# Ignore local npm token
+.npmrc
+
 # Build output
 dist/
 out/
@@ -94,5 +97,3 @@ Desktop.ini
 .turbo/
 .pnp/
 .pnp.js
-
-.npmrc
