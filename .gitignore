@@ -94,3 +94,5 @@ Desktop.ini
 .turbo/
 .pnp/
 .pnp.js
+
+.npmrc
