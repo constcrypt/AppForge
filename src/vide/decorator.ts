@@ -6,10 +6,10 @@ import Vide from "@rbxts/vide";
 import type Types from "./types";
 import type AppForge from ".";
 
-export const AppRegistry = new Map<string, Types.AppRegistry>();
+export const AppRegistry = new Map<AppNames, Types.AppRegistry.Static>();
 
-export function App(props: Types.AppRegistryProps) {
-	return function <T extends new (props: Types.MainProps) => Args>(constructor: T) {
+export function App<N extends AppNames>(props: Types.AppRegistry.Props<N>) {
+	return function <T extends new (props: Types.Props.Main) => Args>(constructor: T) {
 		if (AppRegistry.has(props.name)) {
 			error(`Duplicate registered App name "${props.name}"`);
 		}
@@ -18,7 +18,7 @@ export function App(props: Types.AppRegistryProps) {
 			constructor,
 			visible: props.visible,
 			rules: props.rules,
-		});
+		} as Types.AppRegistry.Generic<N>);
 
 		return constructor;
 	};
@@ -27,12 +27,12 @@ export function App(props: Types.AppRegistryProps) {
 export abstract class Args {
 	public readonly forge: AppForge;
 
-	public readonly props: Types.ClassProps;
+	public readonly props: Types.Props.Class;
 	public readonly name: AppNames;
 
 	public readonly source: Vide.Source<boolean>;
 
-	constructor(props: Types.NameProps & Types.MainProps) {
+	constructor(props: Types.Props.Name & Types.Props.Main) {
 		const { forge, name } = props;
 
 		if (!name) throw "App name is required in Args constructor";

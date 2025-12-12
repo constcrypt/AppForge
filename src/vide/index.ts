@@ -61,11 +61,11 @@ export default class AppForge {
 		this.set(name, !this.getSource(name)());
 	}
 
-	public renderApp(props: Types.NameProps & Types.MainProps) {
+	public renderApp(props: Types.Props.Name & Types.Props.Main) {
 		return AppContainer(props);
 	}
 
-	public renderApps(props: Types.NameProps & Types.MainProps) {
+	public renderApps(props: Types.Props.Name & Types.Props.Main) {
 		const names = props.names;
 		if (names) {
 			return names.map((name) => this.renderApp({ ...props, name, names: undefined }));
@@ -74,7 +74,7 @@ export default class AppForge {
 		throw "No app names provided to renderApps";
 	}
 
-	public renderAll(props: Types.MainProps) {
+	public renderAll(props: Types.Props.Main) {
 		const names = [] as AppNames[];
 		AppRegistry.forEach((_, name) => {
 			names.push(name);

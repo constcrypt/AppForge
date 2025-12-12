@@ -21,7 +21,7 @@ export function createSource(name: AppNames, forge: AppForge) {
 	return source;
 }
 
-export function Render(props: Types.NameProps & Types.MainProps): Vide.Node {
+export function Render(props: Types.Props.Name & Types.Props.Main): Vide.Node {
 	const { config, name, names, forge } = props;
 
 	AppRegistry.forEach((_, name) => createSource(name, forge));

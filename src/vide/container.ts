@@ -12,7 +12,7 @@ import { AppRegistry } from "./decorator";
 
 const create = vide.create;
 
-function createInstance(props: Types.NameProps & Types.MainProps) {
+function createInstance(props: Types.Props.Name & Types.Props.Main) {
 	const { name, forge } = props;
 
 	if (!name) throw "App name is required to create instance";
@@ -28,7 +28,7 @@ function createInstance(props: Types.NameProps & Types.MainProps) {
 	return forge.loaded.get(name)!;
 }
 
-export function AppContainer(props: Types.NameProps & Types.MainProps) {
+export function AppContainer(props: Types.Props.Name & Types.Props.Main) {
 	const { name } = props;
 
 	if (!name) throw "App name is required in AppContainer";

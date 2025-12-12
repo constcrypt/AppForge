@@ -12,6 +12,11 @@ export default function ParentRule(entry: AppNames, forge: AppForge) {
 		if (!rules) return;
 
 		if (rules.parent && rules.parent === entry) {
+			if (entry === name)
+				return warn(
+					`${entry} tried to close ${name} either they have the same ID name or they ARE the same`,
+				);
+
 			if (!forge.sources.get(entry)!()) children.push(name);
 		}
 	});
