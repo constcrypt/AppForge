@@ -50,7 +50,7 @@ declare namespace Types {
 			exclusiveGroup?: string;
 		};
 
-		type Generic<N extends AppNames> = {
+		type Generic<N extends AppNames = AppNames> = {
 			parent?: Exclude<AppNames, N>;
 			exclusiveGroup?: GroupNames;
 		};

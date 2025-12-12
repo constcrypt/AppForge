@@ -1,5 +1,5 @@
 // Packages
-import Vide, { effect } from "@rbxts/vide";
+import Vide, { cleanup, effect, untrack } from "@rbxts/vide";
 
 // Types
 import type Types from "./types";
@@ -30,12 +30,15 @@ export default class AppForge {
 	public bind(name: AppNames, value: Vide.Source<boolean>) {
 		if (!RunService.IsRunning()) {
 			this.sources.set(name, value);
-			effect(() => this.rulesManager.applyRules(name));
+			effect(() => {
+				value();
+				untrack(() => this.rulesManager.applyRules(name));
+			});
 		} else warn("forge.bind is used for studio when game isnt running");
 	}
 
-	public set(name: AppNames, value: boolean) {
-		this.rulesManager.applyRules(name);
+	public set(name: AppNames, value: boolean, rules: boolean = true) {
+		if (rules) this.rulesManager.applyRules(name);
 
 		let src = this.sources.get(name);
 
@@ -49,16 +52,16 @@ export default class AppForge {
 		src(value);
 	}
 
-	public open(name: AppNames) {
-		this.set(name, true);
+	public open(name: AppNames, rules: boolean = true) {
+		this.set(name, true, rules);
 	}
 
-	public close(name: AppNames) {
-		this.set(name, false);
+	public close(name: AppNames, rules: boolean = true) {
+		this.set(name, false, rules);
 	}
 
-	public toggle(name: AppNames) {
-		this.set(name, !this.getSource(name)());
+	public toggle(name: AppNames, rules: boolean = true) {
+		this.set(name, !this.getSource(name)(), rules);
 	}
 
 	public renderApp(props: Types.Props.Name & Types.Props.Main) {

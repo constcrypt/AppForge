@@ -9,10 +9,16 @@ export default function ExclusiveGroupRule(entry: AppNames, forge: AppForge) {
 	if (!entryApp?.rules?.exclusiveGroup) return;
 
 	const group = entryApp.rules.exclusiveGroup;
+	const entrySource = forge.getSource(entry)!();
+
+	if (!entrySource) return;
 
 	AppRegistry.forEach((app, name) => {
-		if (name !== entry && app.rules?.exclusiveGroup === group) {
-			if (forge.getSource(entry)()) forge.close(name);
+		if (name === entry) return;
+		if (app.rules?.exclusiveGroup !== group) return;
+
+		if (forge.getSource(name)!()) {
+			forge.close(name, false);
 		}
 	});
 }

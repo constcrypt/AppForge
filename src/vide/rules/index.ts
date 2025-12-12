@@ -6,10 +6,19 @@ import ExclusiveGroupRule from "./exclusiveGroup";
 import ParentRule from "./parent";
 
 export default class RulesManager {
+	private processing = new Set<AppNames>();
+
 	constructor(private forge: AppForge) {}
 
 	public applyRules(name: AppNames) {
-		ExclusiveGroupRule(name, this.forge);
-		ParentRule(name, this.forge);
+		if (this.processing.has(name)) return;
+		this.processing.add(name);
+
+		try {
+			ParentRule(name, this.forge);
+			ExclusiveGroupRule(name, this.forge);
+		} finally {
+			this.processing.delete(name);
+		}
 	}
 }
