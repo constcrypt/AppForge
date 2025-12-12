@@ -37,30 +37,9 @@ declare namespace Types {
 	};
 
 	namespace Rules {
-		type BlockedBy = AppNames | AppNames[];
-		type Blocks = AppNames | AppNames[];
-		type Exclusive = boolean;
-		type Layer = number;
-
-		type GroupUnion =
-			| {
-					groups?: AppGroups[];
-					group?: never;
-			  }
-			| {
-					groups?: never;
-					group?: AppGroups | "Core";
-			  };
-
 		type All = {
-			blockedBy?: BlockedBy;
-			exclusive?: Exclusive;
-			blocks?: Blocks;
-			layer?: Layer;
-
 			parent?: AppNames;
-			parents?: AppNames[];
-		} & GroupUnion;
+		};
 	}
 }
 

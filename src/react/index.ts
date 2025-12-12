@@ -35,7 +35,8 @@ export default class AppForge {
 	}
 
 	public set(name: AppNames, value: boolean) {
-		if (!this.rulesManager.applyRules(name, value)) return;
+		this.rulesManager.applyRules(name);
+
 		const [_b, setBinding] = this.binds.get(name)!;
 		const [_s, setState] = this.states.get(name)!;
 

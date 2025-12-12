@@ -12,7 +12,7 @@ export default function ParentRule(entry: AppNames, forge: AppForge) {
 		if (!rules) return;
 
 		if (rules.parent && rules.parent === entry) {
-			if (!forge.sources.get(entry)!()) children.push(name);
+			if (!forge.binds.get(entry)!) children.push(name);
 		}
 	});
 

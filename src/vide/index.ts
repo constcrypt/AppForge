@@ -1,5 +1,5 @@
 // Packages
-import Vide, { create } from "@rbxts/vide";
+import Vide, { effect } from "@rbxts/vide";
 
 // Types
 import type Types from "./types";
@@ -13,6 +13,7 @@ import RulesManager from "./rules";
 
 // Helpers
 import { createSource } from "./helpers";
+import { RunService } from "@rbxts/services";
 
 export default class AppForge {
 	public sources = new Map<AppNames, Vide.Source<boolean>>();
@@ -26,17 +27,26 @@ export default class AppForge {
 		return this.sources.get(name)!;
 	}
 
-	public set(name: AppNames, value: Vide.Source<boolean> | boolean) {
+	public bind(name: AppNames, value: Vide.Source<boolean>) {
+		if (!RunService.IsRunning()) {
+			this.sources.set(name, value);
+			effect(() => this.rulesManager.applyRules(name));
+		} else warn("forge.bind is used for studio when game isnt running");
+	}
+
+	public set(name: AppNames, value: boolean) {
 		this.rulesManager.applyRules(name);
 
-		if (typeIs(value, "function")) this.sources.set(name, value);
-		else {
-			const source = this.sources.get(name)!;
-			if (source() === value) return;
+		let src = this.sources.get(name);
 
-			if (!source) createSource(name, this);
-			source(value);
+		if (!src) {
+			createSource(name, this);
+			src = this.sources.get(name)!;
 		}
+
+		if (src() === value) return;
+
+		src(value);
 	}
 
 	public open(name: AppNames) {
