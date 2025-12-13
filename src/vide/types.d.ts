@@ -4,7 +4,12 @@ import type AppForge from ".";
 
 declare namespace Types {
 	namespace Props {
-		type Name = { name?: AppNames; names?: undefined } | { names?: AppNames[]; name?: undefined };
+		type Render =
+			| { name?: AppNames; names?: never; group?: never }
+			| { names?: AppNames[]; name?: never; group?: never }
+			| { group?: GroupNames[] | GroupNames; names?: AppNames[]; name?: never }
+			| { group?: GroupNames[] | GroupNames; name?: AppNames; names?: never }
+			| { group?: GroupNames[] | GroupNames; names?: never; name?: never };
 
 		type Main = {
 			props: AppProps;
@@ -16,6 +21,7 @@ declare namespace Types {
 					minScale?: number;
 				};
 			};
+			render?: Render;
 		};
 
 		type Class = AppProps & {
@@ -28,18 +34,23 @@ declare namespace Types {
 		type Props<N extends AppNames> = {
 			name: N;
 			visible?: boolean;
+			renderGroup?: GroupNames;
 			rules?: Rules.Generic<N>;
 		};
 
 		type Static = {
-			constructor: new (props: Types.Props.Main) => Args;
+			constructor: new (props: Types.Props.Main, name: AppNames) => Args;
+
 			visible?: boolean;
+			renderGroup?: GroupNames;
 			rules?: Rules.Static;
 		};
 
 		type Generic<N extends AppNames = AppNames> = {
-			constructor: new (props: Types.Props.Main) => Args;
+			constructor: new (props: Types.Props.Main, name: AppNames) => Args;
+
 			visible?: boolean;
+			renderGroup?: GroupNames;
 			rules?: Rules.Generic<N>;
 		};
 	}
@@ -57,8 +68,8 @@ declare namespace Types {
 	}
 }
 
-export type NameProps = Types.Props.Name;
 export type MainProps = Types.Props.Main;
 export type ClassProps = Types.Props.Class;
+export type RenderProps = Types.Props.Render;
 
 export default Types;

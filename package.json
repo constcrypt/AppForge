@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/app-forge",
-	"version": "0.6.0-alpha.56",
+	"version": "0.6.0-alpha.71",
 	"description": "An App Manager for Vide",
 	"main": "out/init.lua",
 	"types": "out/index.d.ts",
@@ -42,12 +42,12 @@
 	},
 	"dependencies": {
 		"@rbxts/loners-pretty-react-hooks": "^0.2.9",
-		"@rbxts/loners-pretty-vide-utils": "^0.1.4",
 		"@rbxts/object-utils": "^1.0.4",
 		"@rbxts/services": "^1.6.0",
 		"@rbxts/set-timeout": "^1.1.2"
 	},
 	"peerDependencies": {
+		"@rbxts/loners-pretty-vide-utils": "^0.1.7",
 		"@rbxts/react": "^17.3.7-ts.1",
 		"@rbxts/vide": "^0.5.7"
 	}

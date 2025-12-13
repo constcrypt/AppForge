@@ -11,11 +11,14 @@ export { Render as RenderReact } from "./react/helpers";
 export { Render as RenderVide } from "./vide/helpers";
 
 // Types
-export type { MainProps as VideProps, ClassProps as VideClassProps } from "./vide/types";
+export type {
+	MainProps as VideProps,
+	ClassProps as VideClassProps,
+	RenderProps as VideRenderProps,
+} from "./vide/types";
 export type {
 	MainProps as ReactProps,
 	ClassProps as ReactClassProps,
-	NameProps,
 } from "./react/types";
 
 export { default as useReactAppContext } from "./react/hooks/useAppContext";

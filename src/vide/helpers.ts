@@ -21,8 +21,43 @@ export function createSource(name: AppNames, forge: AppForge) {
 	return source;
 }
 
-export function Render(props: Types.Props.Name & Types.Props.Main): Vide.Node {
-	const { config, name, names, forge } = props;
+export function normalizeGroups(group: GroupNames | GroupNames[]): GroupNames[] {
+	return typeIs(group, "table") ? [...group] : [group];
+}
+
+export function collectByGroup(
+	groups: GroupNames[],
+	filter?: (name: AppNames) => boolean,
+): AppNames[] {
+	const result: AppNames[] = [];
+
+	AppRegistry.forEach((app, name) => {
+		const appGroup = app.renderGroup;
+		if (!appGroup) return;
+		if (!groups.includes(appGroup)) return;
+		if (filter && !filter(name)) return;
+
+		result.push(name);
+	});
+
+	return result;
+}
+
+export function renderNames(props: Types.Props.Main, names: AppNames[], forge: AppForge) {
+	if (names.size() === 0) {
+		throw "No app names provided to renderApps";
+	}
+
+	return names.map((name) =>
+		forge.renderApp({
+			...props,
+			render: { name },
+		}),
+	);
+}
+
+export function Render(props: Types.Props.Main): Vide.Node {
+	const { config, render, forge } = props;
 
 	AppRegistry.forEach((_, name) => createSource(name, forge));
 
@@ -31,10 +66,21 @@ export function Render(props: Types.Props.Name & Types.Props.Main): Vide.Node {
 		__px = true;
 	} else warn("Rendering twice making a second px");
 
-	if (name) {
-		return forge.renderApp(props as never);
-	} else if (names) {
-		return forge.renderApps(props as never);
+	if (render) {
+		if (render.name && render.group) {
+			return forge.renderGroupByName(props);
+		} else if (render.names && render.group) {
+			return forge.renderGroupByNames(props);
+		} else if (render?.name) {
+			return forge.renderApp(props);
+		} else if (render.names) {
+			return forge.renderApps(props);
+		} else if (render.group) {
+			return forge.renderGroup(props);
+		}
 	}
-	return forge.renderAll(props as never);
+
+	return forge.renderAll(props);
 }
+
+export type RenderAPI = typeof Render;

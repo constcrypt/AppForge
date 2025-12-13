@@ -1,5 +1,5 @@
 // Packages
-import { px as pxScale } from "@rbxts/loners-pretty-vide-utils";
+import { px } from "@rbxts/loners-pretty-vide-utils";
 import Vide from "@rbxts/vide";
 
 // Types
@@ -9,13 +9,16 @@ import type AppForge from ".";
 export const AppRegistry = new Map<AppNames, Types.AppRegistry.Static>();
 
 export function App<N extends AppNames>(props: Types.AppRegistry.Props<N>) {
-	return function <T extends new (props: Types.Props.Main) => Args>(constructor: T) {
+	return function <T extends new (props: Types.Props.Main, name: AppNames) => Args>(
+		constructor: T,
+	) {
 		if (AppRegistry.has(props.name)) {
 			error(`Duplicate registered App name "${props.name}"`);
 		}
 
 		AppRegistry.set(props.name, {
 			constructor,
+			renderGroup: props.renderGroup,
 			visible: props.visible,
 			rules: props.rules,
 		} as Types.AppRegistry.Generic<N>);
@@ -32,12 +35,8 @@ export abstract class Args {
 
 	public readonly source: Vide.Source<boolean>;
 
-	constructor(props: Types.Props.Name & Types.Props.Main) {
-		const { forge, name } = props;
-
-		if (!name) throw "App name is required in Args constructor";
-
-		const px = pxScale;
+	constructor(props: Types.Props.Main, name: AppNames) {
+		const { forge } = props;
 
 		this.forge = forge;
 

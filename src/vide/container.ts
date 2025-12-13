@@ -9,28 +9,31 @@ import type Types from "./types";
 
 // Components
 import { AppRegistry } from "./decorator";
+import { renderHook } from "@rbxts/loners-pretty-react-hooks";
 
 const create = vide.create;
 
-function createInstance(props: Types.Props.Name & Types.Props.Main) {
-	const { name, forge } = props;
+function createInstance(props: Types.Props.Main) {
+	const { forge, render } = props;
 
+	const name = render?.name;
 	if (!name) throw "App name is required to create instance";
 
 	const appClass = AppRegistry.get(name);
 	if (!appClass) throw `App "${name}" not registered`;
 
 	if (!forge.loaded.has(name)) {
-		const instance = new appClass.constructor(props);
+		const instance = new appClass.constructor(props, name);
 		forge.loaded.set(name, instance.render());
 	}
 
 	return forge.loaded.get(name)!;
 }
 
-export function AppContainer(props: Types.Props.Name & Types.Props.Main) {
-	const { name } = props;
+export function AppContainer(props: Types.Props.Main) {
+	const { render } = props;
 
+	const name = render?.name;
 	if (!name) throw "App name is required in AppContainer";
 
 	const element = createInstance(props);
