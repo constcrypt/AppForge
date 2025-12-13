@@ -96,11 +96,13 @@ export default class AppForge extends Renders {
 	}
 	public mount(callback: () => Vide.Node, props: Types.Props.Main, target: Instance) {
 		const Container = callback();
-		apply(Container as Instance)({
-			[0]: this.renderMount(props),
-		});
 
-		this.innerMount = mount(() => Container, target);
+		this.innerMount = mount(() => {
+			apply(Container as Instance)({
+				[0]: this.renderMount(props),
+			});
+			return Container;
+		}, target);
 
 		return this.innerMount;
 	}
