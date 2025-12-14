@@ -159,7 +159,6 @@ forge.mount(
  ),
  {
   props,
-  forge,
  },
  Players.LocalPlayer.WaitForChild("PlayerGui"),
 );
@@ -179,7 +178,6 @@ This:
 forge.mount(
  () => <screengui ResetOnSpawn={false} />,
  {
-  forge,
   props: {},
  },
  playerGui,

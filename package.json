@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/app-forge",
-	"version": "0.6.0-alpha.88",
+	"version": "0.7.1",
 	"description": "An App Manager for Vide",
 	"main": "out/init.lua",
 	"types": "out/index.d.ts",
